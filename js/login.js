@@ -19,10 +19,11 @@ $('#loginForm').submit((e)=>{
 
       let key = 'triggers_user';
       let target = "//smacker.xyz/";
-      xdLocalStorage.setItem(key, data.message.user, function (data) { console.log(data); });
+      xdLocalStorage.setItem(key, JSON.stringify(data.message.user), function (data) { console.log(data); });
     }
     else {
       // show error
+      console.log("error");
     }
   });
 });
