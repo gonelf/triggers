@@ -17,10 +17,9 @@ $('#loginForm').submit((e)=>{
       localStorage.setItem('triggers_user', JSON.stringify(data.message.user));
       console.log(JSON.parse(localStorage.getItem('triggers_user')));
 
-      let target = "https://smacker.xyz";
-      $("#target").attr("src", target);
-      postCrossDomainMessage(data.message.user, target);
-      // console.log(getCookie('triggers_user'));
+      let key = 'triggers_user';
+      let target = "//smacker.xyz/";
+      xdLocalStorage.setItem(key, data.message.user, function (data) { console.log(data); });
     }
     else {
       // show error
@@ -28,7 +27,13 @@ $('#loginForm').submit((e)=>{
   });
 });
 
-function postCrossDomainMessage(msg, domain) {
-  var win = document.getElementById('target').contentWindow;
-  win.postMessage(msg, domain);
-}
+xdLocalStorage.init(
+    {
+        /* required */
+        iframeUrl:'https://popil.lol/start.html',
+        //an option function to be called right after the iframe was loaded and ready for action
+        initCallback: function () {
+            console.log('Got iframe ready');
+        }
+    }
+);
