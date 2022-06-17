@@ -1,8 +1,8 @@
-function setCookie(cname, cvalue, exdays) {
+function setCookie(cname, cvalue, exdays=1, domain=window.location.host) {
   const d = new Date();
   d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
   let expires = "expires="+d.toUTCString();
-  document.cookie = cname + "=" + JSON.stringify(cvalue) + ";" + expires + ";path=/";
+  document.cookie = cname + "=" + JSON.stringify(cvalue) + ";" + expires + ";domain="+domain+";path=/";
 }
 
 function getCookie(cname) {
