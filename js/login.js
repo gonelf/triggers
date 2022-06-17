@@ -17,7 +17,9 @@ $('#loginForm').submit((e)=>{
       localStorage.setItem('triggers_user', JSON.stringify(data.message.user));
       console.log(JSON.parse(localStorage.getItem('triggers_user')));
 
-      postCrossDomainMessage(data.message.user, "https://smacker.xyz");
+      let target = "https://smacker.xyz";
+      $("#target").attr("src", target);
+      postCrossDomainMessage(data.message.user, target);
       // console.log(getCookie('triggers_user'));
     }
     else {
@@ -27,6 +29,6 @@ $('#loginForm').submit((e)=>{
 });
 
 function postCrossDomainMessage(msg, domain) {
-  var win = document.getElementById('ifr').contentWindow;
+  var win = document.getElementById('target').contentWindow;
   win.postMessage(msg, domain);
 }
