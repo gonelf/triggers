@@ -1,9 +1,22 @@
-$('#loginForm').submit((e)=>{
-  e.preventDefault();
-  e.stopPropagation();
+// define
 
-  var params = { email: $('#email').val(), password: $('#pass').val() };
-  console.log(params);
+let cname = "triggers_user";
+let dashboard_path = "dashboard.html";
+var urlParams = null;
+
+// functions
+
+function goto (page) {
+  window.location.href = page;
+}
+
+function is_logged (){
+  return getCookie(cname) !== null;
+}
+
+function login (email, pass){
+  var params = { email: email, password: pass };
+  // console.log(params);
 
   $.post( "https://gonelf.api.stdlib.com/airtable-login-bk@dev/login/", params)
   .done(function( data ) {
@@ -11,30 +24,44 @@ $('#loginForm').submit((e)=>{
     // console.log(data);
     if (data.code == 200 && data.message.valid == true) {
       // create user cookie
-      setCookie('triggers_user', data.message.user,);
-      setCookie('triggers_user', data.message.user, 1, "smacker.xyz");
+      setCookie(cname, data.message.user);
 
-      localStorage.setItem('triggers_user', JSON.stringify(data.message.user));
-      console.log(JSON.parse(localStorage.getItem('triggers_user')));
+      // localStorage.setItem('triggers_user', JSON.stringify(data.message.user));
+      // console.log(JSON.parse(localStorage.getItem('triggers_user')));
 
-      let key = 'triggers_user';
-      let target = "//smacker.xyz/";
-      xdLocalStorage.setItem(key, JSON.stringify(data.message.user), function (data) { console.log(data); });
+      window.open(urlParams.get('ref'), '_blank');
+      goto(dashboard_path);
     }
     else {
       // show error
       console.log("error");
     }
   });
+}
+
+function logout (){
+  deleteCookie(cname);
+  goto("/");
+}
+
+function send_to_dashboard_if_logged() {
+  if(is_logged()) {
+    goto(dashboard_path);
+  }
+  else {
+    urlParams = new URLSearchParams(window.location.search);
+  }
+}
+
+// actions
+
+$('#loginForm').submit((e)=>{
+  e.preventDefault();
+  e.stopPropagation();
+
+  login($('#email').val(), $('#pass').val());
 });
 
-xdLocalStorage.init(
-    {
-        /* required */
-        iframeUrl:'https://popil.lol/start.html',
-        //an option function to be called right after the iframe was loaded and ready for action
-        initCallback: function () {
-            console.log('Got iframe ready');
-        }
-    }
-);
+$("#logout").click(()=>{
+  logout();
+});

@@ -18,5 +18,9 @@ function getCookie(cname) {
       return JSON.parse(val);
     }
   }
-  return "";
+  return null;
+}
+
+function deleteCookie(cname){
+  setCookie(cname, '', -1);
 }
