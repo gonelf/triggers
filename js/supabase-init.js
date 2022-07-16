@@ -1,0 +1,2 @@
+const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRhaXBtYmpqZGlucmtxanpoc21tIiwicm9sZSI6ImFub24iLCJpYXQiOjE2NTU5MDE4ODksImV4cCI6MTk3MTQ3Nzg4OX0.PzJP_QTN7zW0Wz0euTlMoSgrlIJvn93tpfWpvgVQ4qA';
+const SUPABASE_URL = "https://taipmbjjdinrkqjzhsmm.supabase.co";
